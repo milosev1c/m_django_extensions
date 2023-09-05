@@ -1,6 +1,7 @@
 from io import BytesIO
 
 from PIL import Image
+from django.core.files.base import ContentFile
 from django.db.models import ImageField
 
 
@@ -19,22 +20,11 @@ class WebPImageField(ImageField):
         super(WebPImageField, self).__init__(verbose_name, name, width_field, height_field, **kwargs)
 
     def save_form_data(self, instance, data):
-        if data and data.name:
-            image = Image.open(data)
-            image = image.convert("RGB")
+        image = Image.open(data)
 
-            webp_image_name = f"{data.name.rsplit('.', 1)[0]}.webp"
-            webp_image_bytes = BytesIO()
-            image.save(
-                webp_image_bytes,
-                "WEBP",
-                quality=self.webp_quality,
-                lossless=self.webp_lossless,
-                method=self.webp_method
-            )
-            webp_image_bytes.seek(0)
-
-            data.file = webp_image_bytes
-            data.name = webp_image_name
-
+        filename, ext = data.name.split(".")
+        filename = f"{filename}.webp"
+        with BytesIO() as buffer:
+            image.save(buffer, 'webp')
+            data = ContentFile(buffer.getvalue(), name=filename)
         super().save_form_data(instance, data)
