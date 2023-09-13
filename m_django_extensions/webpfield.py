@@ -20,6 +20,8 @@ class WebPImageField(ImageField):
         super(WebPImageField, self).__init__(verbose_name, name, width_field, height_field, **kwargs)
 
     def save_form_data(self, instance, data):
+        if data is None:
+            return
         image = Image.open(data)
 
         filename, ext = data.name.split(".")
