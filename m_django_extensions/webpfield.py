@@ -13,6 +13,7 @@ class WebPImageField(ImageField):
     :param webp_lossless - loseless enabled? (false)
     :param webp_method -
     """
+
     def __init__(self, verbose_name=None, name=None, width_field=None, height_field=None, **kwargs):
         self.webp_quality = kwargs.pop('webp_quality', 80)
         self.webp_lossless = kwargs.pop('webp_lossless', False)
@@ -22,11 +23,11 @@ class WebPImageField(ImageField):
     def save_form_data(self, instance, data):
         if data is None:
             return
-        image = Image.open(data)
-
-        filename, ext = data.name.split(".")
-        filename = f"{filename}.webp"
-        with BytesIO() as buffer:
-            image.save(buffer, 'webp')
-            data = ContentFile(buffer.getvalue(), name=filename)
+        if not data.name.endswith(".webp"):  # convert only non-webp files
+            image = Image.open(data)
+            filename, ext = data.name.split(".")
+            filename = f"{filename}.webp"
+            with BytesIO() as buffer:
+                image.save(buffer, 'webp')
+                data = ContentFile(buffer.getvalue(), name=filename)
         super().save_form_data(instance, data)
