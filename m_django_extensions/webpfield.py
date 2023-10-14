@@ -25,8 +25,8 @@ class WebPImageField(ImageField):
             return
         if not data.name.endswith(".webp"):  # convert only non-webp files
             image = Image.open(data)
-            filename, ext = data.name.split(".")
-            filename = f"{filename}.webp"
+            filename_list = data.name.split(".")
+            filename = f"{'.'.join(filename_list[:-1])}.webp"
             with BytesIO() as buffer:
                 image.save(buffer, 'webp')
                 data = ContentFile(buffer.getvalue(), name=filename)
