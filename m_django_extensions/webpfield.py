@@ -21,9 +21,7 @@ class WebPImageField(ImageField):
         super(WebPImageField, self).__init__(verbose_name, name, width_field, height_field, **kwargs)
 
     def save_form_data(self, instance, data):
-        if data is None:
-            return
-        if not data.name.endswith(".webp"):  # convert only non-webp files
+        if data and not data.name.endswith(".webp"):  # convert only non-webp files
             image = Image.open(data)
             filename_list = data.name.split(".")
             filename = f"{'.'.join(filename_list[:-1])}.webp"
