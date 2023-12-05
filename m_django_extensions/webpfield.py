@@ -26,6 +26,12 @@ class WebPImageField(ImageField):
             filename_list = data.name.split(".")
             filename = f"{'.'.join(filename_list[:-1])}.webp"
             with BytesIO() as buffer:
-                image.save(buffer, 'webp')
+                image.save(
+                    buffer,
+                    'webp',
+                    loseless=self.webp_lossless,
+                    method=self.webp_method,
+                    quality=self.webp_quality
+                )
                 data = ContentFile(buffer.getvalue(), name=filename)
         super().save_form_data(instance, data)
