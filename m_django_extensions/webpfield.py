@@ -10,8 +10,8 @@ class WebPImageField(ImageField):
     This is a field to automatically convert images to Webp format
     Usage: replace ImageField with this one. No migrations needed.
     :param webp_quality - WebP quality (80)
-    :param webp_lossless - loseless enabled? (false)
-    :param webp_method -
+    :param webp_lossless - loseless enabled? (false). Will be true if image is in RGBA mode
+    :param webp_method - webp save method (4)
     """
 
     def __init__(self, verbose_name=None, name=None, width_field=None, height_field=None, **kwargs):
@@ -29,7 +29,7 @@ class WebPImageField(ImageField):
                 image.save(
                     buffer,
                     'webp',
-                    loseless=self.webp_lossless,
+                    loseless=self.webp_lossless or image.mode == "RGBA",
                     method=self.webp_method,
                     quality=self.webp_quality
                 )
