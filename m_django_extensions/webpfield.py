@@ -1,6 +1,6 @@
 from io import BytesIO
 
-from PIL import Image
+from PIL import Image, ImageFile
 from django.core.files.base import ContentFile
 from django.db.models import ImageField
 
@@ -22,6 +22,7 @@ class WebPImageField(ImageField):
 
     def save_form_data(self, instance, data):
         if data and not data.name.endswith(".webp"):  # convert only non-webp files
+            ImageFile.LOAD_TRUNCATED_IMAGES = True
             image = Image.open(data)
             filename_list = data.name.split(".")
             filename = f"{'.'.join(filename_list[:-1])}.webp"
