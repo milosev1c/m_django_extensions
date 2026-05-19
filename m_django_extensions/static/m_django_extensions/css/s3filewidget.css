@@ -1,0 +1,22 @@
+.s3-file-widget .s3-file-progress {
+  width: 100%;
+  max-width: 24rem;
+  margin-top: 0.5rem;
+}
+
+.s3-file-widget .s3-file-status {
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+}
+
+.s3-file-widget .s3-file-status-error {
+  color: var(--error-fg, #ba2121);
+}
+
+.s3-file-widget .s3-file-current {
+  margin-bottom: 0.5rem;
+}
+
+.s3-file-widget .s3-file-clear-button {
+  margin-left: 0.5rem;
+}

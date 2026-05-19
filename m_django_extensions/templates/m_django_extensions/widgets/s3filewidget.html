@@ -1,0 +1,18 @@
+<div class="s3-file-widget"{% for name, value in widget.attrs.items %}{% if value is not None %} {{ name }}="{{ value }}"{% endif %}{% endfor %}>
+  <input type="hidden" name="{{ widget.name }}" value="{{ current_value }}" class="s3-file-path-input">
+
+  {% if current_value %}
+  <p class="s3-file-current">
+    Current:
+    <span class="s3-file-current-name">{{ display_name }}</span>
+    <button type="button" class="s3-file-clear-button">Clear</button>
+  </p>
+  {% endif %}
+
+  <p class="s3-file-picker">
+    <input type="file" class="s3-file-input">
+  </p>
+
+  <progress class="s3-file-progress" value="0" max="100" hidden></progress>
+  <p class="s3-file-status" aria-live="polite"></p>
+</div>
