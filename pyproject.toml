@@ -33,6 +33,3 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["m_django_extensions"]
 
-[tool.hatch.build.targets.wheel.force-include]
-"m_django_extensions/static" = "m_django_extensions/static"
-"m_django_extensions/templates" = "m_django_extensions/templates"
