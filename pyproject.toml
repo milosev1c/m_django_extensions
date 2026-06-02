@@ -1,6 +1,6 @@
 [project]
 name = "m-django-extensions"
-version = "0.1.10"
+version = "0.1.11"
 description = ""
 authors = [
     { name = "Artem Milosevic", email = "mitay93@gmail.com" },
